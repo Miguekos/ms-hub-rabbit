@@ -23,4 +23,4 @@ spec:
 status:
   loadBalancer:
     ingress:
-      - hostname: ms-hub-rabbit
+    - {}

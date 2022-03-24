@@ -4,7 +4,7 @@ metadata:
   name: ms-hub-rabbit
   # namespace: hub-dev
   annotations:
-    konghq.com/strip-path: "false"
+    konghq.com/strip-path: "true"
     # konghq.com/methods: "GET,POST"
     # konghq.com/plugins: "add-response-header"
 spec:

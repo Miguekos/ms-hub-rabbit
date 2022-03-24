@@ -19,3 +19,8 @@ spec:
                 name: ms-hub-rabbit-service
                 port:
                   number: 80
+
+status:
+  loadBalancer:
+    ingress:
+      - hostname: ms-hub-rabbit

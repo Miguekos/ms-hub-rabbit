@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  # namespace: hub-dev
+  name: ms-hub-rabbit
+  labels:
+    app: ms-hub-rabbit-app
+    tier: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ms-hub-rabbit-app
+      tier: backend
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: ms-hub-rabbit-app
+        tier: backend
+    spec:
+      containers:
+        - image: miguekos1233/ms-hub-rabbit:1.1
+          name: ms-hub-rabbit
+          resources:
+            requests:
+              cpu: "100m"
+              memory: 128Mi
+            limits:
+              cpu: "200m"
+              memory: 256Mi
+          env:
+            - name: HOST_MONGO
+              value: "207.244.228.209"
+          ports:
+            - containerPort: 3000

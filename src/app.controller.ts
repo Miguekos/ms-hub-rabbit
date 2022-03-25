@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Res, HttpStatus } from '@nestjs/common';
 import { AppService } from './app.service';
 
 @Controller()
@@ -24,4 +24,18 @@ export class AppController {
     this.appService.publishPost(queue, body);
     return 'POST Sending!!!';
   }
+
+
+  @Post('notify')
+  async notify(@Res() res, @Body() notifyJson:object){
+    console.log('Input: ',notifyJson)
+      const notify = await this.appService.notify(notifyJson)
+      console.log('Output:',notify)
+      res.status(HttpStatus.OK).json({
+        message: 'OK',
+        data: notify
+      })
+
+  }
+
 }

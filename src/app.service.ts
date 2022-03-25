@@ -2,16 +2,43 @@ import { Injectable, Body } from '@nestjs/common';
 
 import { InjectAmqpConnection } from 'nestjs-amqp';
 import {} from 'amqplib';
+import { OrderService } from './order/order.service';
 
 @Injectable()
 export class AppService {
-  constructor(@InjectAmqpConnection() private readonly amqp) {
+  constructor(
+    @InjectAmqpConnection() private readonly amqp,
+    private orderService: OrderService
+  ) {
     // this.startConnect();
     this.startConnectConsumer();
   }
 
   getHello(): string {
     return 'Hello World!';
+  }
+
+  async notify(notifyJson):Promise<object>{
+    var notify;
+    const typeProcess = 
+        notifyJson.DeliveryOrderId ? 1 : // ORDER
+        notifyJson.ProductId ? 2 : // PRODUCT
+        null; // NINGUNO
+    console.log('Tipo de proceso:',typeProcess)
+    switch (typeProcess) {
+        case 1:
+          console.log('ORDER')
+            notify = await this.orderService.newOrder(notifyJson);
+            break;
+        case 2:
+          console.log('PRODUCT')
+            //notify = await this.productService.addProduct(notifyJson);
+            
+            break;
+        default:
+            break;
+    }
+    return notify
   }
 
   async startConnect() {

@@ -1,7 +1,10 @@
-name: This a workflow title
-on: 
+name: image-ms-hub-rabbit
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    branches: [ main ] # When pushing to any branch then run this action
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 # Env variable
 env:
   DOCKER_USER: ${{secrets.DOCKER_USER}}
